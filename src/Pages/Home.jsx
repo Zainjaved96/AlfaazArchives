@@ -5,14 +5,15 @@ import Card from 'react-bootstrap/Card';
 import { Container } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import AllTextCards from '../components/AllTextCards';
+import { loadTexts } from '../utils/textUtlis';
+import { createNewCopy } from '../utils/textUtlis';
 
 const Home = () => {
+
     const [inputText, setInputText] = useState('');
-    const [texts, setTexts] = useState(() => {
-        // Get texts from local storage or default to empty array
-        const savedTexts = localStorage.getItem('texts');
-        return savedTexts ? JSON.parse(savedTexts) : [];
-    });
+    const [tag, setTagText] = useState(null)
+    const [texts, setTexts] = useState(loadTexts());
+    console.log(texts)
     const [hasCopiedAll, setHasCopiedAll] = useState(false);
     const [hasDeletedAll, setHasDeletedAll] = useState(false)
 
@@ -27,10 +28,19 @@ const Home = () => {
 
     const handleAddText = () => {
         if (inputText.trim() !== '') {
-            setTexts([...texts, inputText]);
+            const newcopy = createNewCopy(inputText, tag)
+            setTexts([...texts,newcopy ]);
             setInputText('');
+            setTagText(null)
         }
     };
+
+    const handleDeleteText = (id) => {
+        const updatedTexts = texts.filter(text => text.id !== id);
+        setTexts(updatedTexts);
+        // Also update localStorage if you're storing texts there
+        localStorage.setItem('texts', JSON.stringify(updatedTexts));
+      };
 
     const handleDeleteAll = () => {
       setTexts([]);
@@ -77,6 +87,7 @@ const Home = () => {
              onCopyAll={handleCopyAll} 
              hasDeletedAll={hasDeletedAll}
              hasCopiedAll={hasCopiedAll}
+             handleDeleteText={handleDeleteText}
               />
         </>
     );
