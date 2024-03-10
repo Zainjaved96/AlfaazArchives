@@ -3,7 +3,7 @@
     import Button from 'react-bootstrap/Button';
 
     const AllTextCards = (props) => {
-    const {texts, onDeleteAll, onCopyAll, hasDeletedAll, hasCopiedAll } = props
+    const {texts, onDeleteAll, onCopyAll, hasDeletedAll, hasCopiedAll, handleDeleteText } = props
     return (
         <>
         { (
@@ -21,8 +21,8 @@
                 </div>
             )}
         <div className='d-flex justify-content-center flex-wrap gap-4'>
-                {[...texts].reverse().map((text, index) => (
-                <SingleTextCard text={text} key={index} />
+                {[...texts].reverse().map((textObj, index) => (
+                <SingleTextCard textObj={textObj} key={index} handleDeleteText={handleDeleteText}  />
             ))}
         </div>
         
