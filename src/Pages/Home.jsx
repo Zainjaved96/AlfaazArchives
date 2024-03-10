@@ -36,6 +36,8 @@ const Home = () => {
     };
 
     const handleDeleteText = (id) => {
+        console.log("Deleting ID:", id);  // Log the ID to be deleted
+        console.log("Current Texts:", texts);  // Log current texts
         const updatedTexts = texts.filter(text => text.id !== id);
         setTexts(updatedTexts);
         // Also update localStorage if you're storing texts there

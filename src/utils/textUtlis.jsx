@@ -27,7 +27,7 @@ export const loadTexts = () => {
 export const createNewCopy = (text,tag=null)=> {
     const newCopy = {
         text: text,
-        id: uuidv4,
+        id: uuidv4(),
         tag: tag,
         created_at: new Date().toISOString()
 
